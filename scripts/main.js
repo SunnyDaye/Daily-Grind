@@ -135,6 +135,9 @@ const specials = [
     },
 ]
 const date = new Date();
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+console.log(urlParams);
 
 function coffeeTemplate(coffee) {
     return `<p>
@@ -148,8 +151,43 @@ function coffeeTemplate(coffee) {
   </p>`;
 }
 
-document.getElementById('coffee-template').innerHTML = coffeeTemplate(specials[date.getDay()]);
-document.getElementById('content').innerHTML = specials[date.getDay()].content;
-document.querySelector("html").style.backgroundColor = specials[date.getDay()].color;
-document.getElementById('special-heading-1').innerHTML = specials[date.getDay()].name;
-document.getElementById('special-heading-2').innerHTML = specials[date.getDay()].name;
+
+if (urlParams == 0) {
+    document.getElementById('coffee-template').innerHTML = coffeeTemplate(specials[date.getDay()]);
+    document.getElementById('content').innerHTML = specials[date.getDay()].content;
+    document.querySelector("html").style.backgroundColor = specials[date.getDay()].color;
+    document.getElementById('special-heading-1').innerHTML = specials[date.getDay()].name;
+    document.getElementById('special-heading-2').innerHTML = specials[date.getDay()].name;
+} else {
+    let indexOfDay;
+    switch (urlParams.get('day')) {
+        case 'sunday':
+            indexOfDay = 0;
+            break;
+        case 'monday':
+            indexOfDay = 1;
+            break;
+        case 'tuesday':
+            indexOfDay = 2;
+            break;
+        case 'wednesday':
+            indexOfDay = 3;
+            break;
+        case 'thursday':
+            indexOfDay = 4;
+            break;
+        case 'friday':
+            indexOfDay = 5;
+            break;
+        case 'saturday':
+            indexOfDay = 6;
+            break;
+        default:
+            break;
+    }
+    document.getElementById('coffee-template').innerHTML = coffeeTemplate(specials[indexOfDay]);
+    document.getElementById('content').innerHTML = specials[indexOfDay].content;
+    document.querySelector("html").style.backgroundColor = specials[indexOfDay].color;
+    document.getElementById('special-heading-1').innerHTML = specials[indexOfDay].name;
+    document.getElementById('special-heading-2').innerHTML = specials[indexOfDay].name;
+}
